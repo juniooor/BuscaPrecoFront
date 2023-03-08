@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def pesquisar(requests):
+    return render(requests,'produtos/pesquisa.html')
+
+def exibir_resultados(requests):
+    pass
