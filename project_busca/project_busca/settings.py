@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'project_busca.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway',
+        'USER':'postgres',
+        'PASSWORD':'LYzhwFvVJH2zg31TdHjR',
+        'HOST':'containers-us-west-46.railway.app',
+        'PORT': '7327'
     }
 }
 
@@ -104,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'pt-br '
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'America/Pernambuco'
 
