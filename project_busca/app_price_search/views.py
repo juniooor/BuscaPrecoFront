@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 
-def pesquisar(requests):
-    return render(requests,'produtos/pesquisa.html')
+def pesquisar(request):
+    return render(request, 'project/pesquisa.html')
 
 def exibir_resultados(requests):
     pass
