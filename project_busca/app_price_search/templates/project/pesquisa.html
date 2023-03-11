@@ -1,3 +1,23 @@
 {% extends 'project/base.html' %}
 {% block content %}
+<style>
+    .container {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        padding: 50px;
+        {% comment %} background-color: red; {% endcomment %}
+
+      }
+      
+</style> 
+<form class="containe" action="{% url 'resultados' %}" method="POST" >
+     {% csrf_token %}
+    <div class="container">
+        <h1>Pesquisar</h1>
+        <input type="text" class="form-control-lg" name="produto" placeholder="pesquisar...">
+        <input class="form-control-lg" type="submit" value="🔎">
+    </div>
+</form>
+  
 {% endblock content %}

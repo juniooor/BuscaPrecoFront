@@ -13,12 +13,17 @@
       .navbar-light{
         background-color: #3CB371 !important; 
       }
+
+      .navbar-brand{
+        font-size: 28px ;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{% url 'pesquisar' %}">
           <img src="https://i.ibb.co/0QxzbKh/sale.png" alt="" width="45" height="45" class="d-inline-block align-text-top">
           Busca Menor Preço
         </a>
