@@ -1,6 +1,33 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<h1>RESULTADOOOOOOO</h1>
+{% load humanize %}
+<form class="containe" action="{% url 'resultados' %}" method="POST" >
+    {% csrf_token %}
+   <div class="container">
+       <h1>Pesquisar</h1>
+       <input type="text" class="form-control-lg" name="produto" placeholder="pesquisar...">
+       <input class="form-control-lg" type="submit" value="🔎">
+   </div>
+</form>
+<div class="container">
+    <table class= "table table-light table-strip">
+        <tr>
+            <th>Produto</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Site</th>
+            <th>Data Cotação</th>
+        </tr>
+        {% for dado in dados  %}
+        <td><img style= "max-height: 150px; max-height=150px;" src="{{ dado.link_image }}" alt=""></td>
+        <td>{{ dado.name }}</td>
+        <td>R${{ dado.price | intcomma }}</td>
+        <td>{{ dado.site }}</td>
+        <td>{{ dado.quote_date}}</td>
+        {% endfor %}
+    </table>    
+</div>
+
 {% endblock content %}
 
