@@ -12,6 +12,9 @@
 </form>
 <div class="container">
     <table class= "table table-light table-strip">
+        {% if dados|length == 0 %}
+            <h1>Error Produto Não Encontrado</h1>
+        {% else %}
         <tr>
             <th>Produto</th>
             <th>Nome</th>
@@ -19,7 +22,7 @@
             <th>Site</th>
             <th>Data Cotação</th>
         </tr>
-        {% for dado in dados  %}
+            {% for dado in dados  %}
             <tr>
                 <td><img style= "max-height: 150px; max-height=150px;" src="{{ dado.link_image }}" alt=""></td>
                 <td>{{ dado.name }}</td>
@@ -27,9 +30,16 @@
                 <td>{{ dado.site }}</td>
                 <td>{{ dado.quote_date}}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        
+
+
+        {% comment %} {% endif %} {% endcomment %}
     </table>    
 </div>
+
 
 {% endblock content %}
 
