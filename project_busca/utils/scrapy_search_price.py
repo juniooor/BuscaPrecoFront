@@ -29,7 +29,7 @@ sql = conexao.cursor()
 def new_product(sql, conexao, name, price, site, link_image, quote_date):
     query = "SELECT * FROM app_price_search_product WHERE name=%s and price=%s and site=%s"
     values = (name, price, site)
-    result = sql.execute(query, values)
+    # result = sql.execute(query, values)
     dados = sql.fetchall()
     
     if len(dados) == 0:
@@ -114,7 +114,7 @@ def scan_site_3(item):
     driver, wait = start_driver()
     driver.get('https://lista.mercadolivre.com.br/'+ produto)
     names = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="ui-search-item__group ui-search-item__group--title shops__items-group"]/a[@class="ui-search-item__group__element shops__items-group-details ui-search-link"]/h2')))
-    prices= wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="ui-search-price__second-line shops__price-second-line"]/span[@class="price-tag ui-search-price__part shops__price-part"]/span[@class="price-tag-text-sr-only"]')))
+    prices = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="ui-search-price__second-line shops__price-second-line"]/span[@class="price-tag ui-search-price__part shops__price-part"]/span[@class="price-tag-text-sr-only"]')))
     site = driver.current_url
     link_image = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="slick-slide slick-active"]/img')))
     name = names[0].text.split('-')[0]
