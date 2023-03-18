@@ -12,8 +12,6 @@ from selenium.webdriver.support import expected_conditions as condicao_esperada
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
-# with open('password.txt', 'r') as arquivo:
-#     password = arquivo.read()
 
 conexao = psycopg2.connect(
     database='railway',
@@ -41,7 +39,6 @@ def new_product(sql, conexao, name, price, site, link_image, quote_date):
         print('Dados já cadastrados')
         
 
-# new_product(sql, conexao, 'Xbox Series X', 4000.59, 'https://www.xbox.com/pt-BR/consoles/xbox-series-x', datetime.now(), 'https://i.ibb.co/Lt6WnJ8/console-microsoft-xbox-series-x-1tb-preto-rrt-00006-1601067024-g.jpg' )
     conexao.commit()    
 
 
@@ -80,6 +77,7 @@ def scan_site_1(item):
     prices = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="sc-c0914aad-2 hdvMuk"]/span[@class="sc-c0914aad-9 hTVULn"]' )))
     site = driver.current_url                                                                  
     link_image = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="sc-b78556c4-5 jkQmcY"]/span/img'))) 
+    #limpa os dados para entrar somente o necessario no banco de dados
     name = names[0].text
     price1 = prices[0].text.split(' ')[2].replace('.','')
     price = price1.replace(',', '.')
@@ -97,12 +95,12 @@ def scan_site_2(item):
     prices = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="sc-hLBbgP blWoJz sc-gGfaQS dhvIhC"]/p[@class="sc-kDvujY jDmBNY sc-hGglLj bQqJoc"]' )))
     site = driver.current_url                                                                  
     link_image = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="sc-eQVdPn clJokE"]/img'))) 
-    
+    #limpa os dados para entrar somente o necessario no banco de dados
     name = names[0].text.split("”")[0]
     price1 = prices[0].text.split(' ')[1].replace('.', '')
     price = price1.replace(',', '.')
     image = link_image[0].get_attribute('src')
-    
+    #cadastra novo produto no banco de dados
     new_product(sql, conexao, name, price, site, image, datetime.now())
     print("ok2")
     
@@ -115,6 +113,7 @@ def scan_site_3(item):
     prices = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="ui-search-price__second-line shops__price-second-line"]/span[@class="price-tag ui-search-price__part shops__price-part"]/span[@class="price-tag-text-sr-only"]')))
     site = driver.current_url
     link_image = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="slick-slide slick-active"]/img')))
+    #limpa os dados para entrar somente o necessario no banco de dados
     name = names[0].text.split('-')[0]
     price = prices[0].text.split(' ')[0]
     image = link_image[0].get_attribute('src')

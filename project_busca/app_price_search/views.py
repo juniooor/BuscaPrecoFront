@@ -11,14 +11,18 @@ def pesquisar(request):
 
 def exibir_resultados(requests):
     name_produto = requests.POST.get('produto')
-    produto = Product.objects.filter(name__icontains=name_produto)  
-    if not name_produto.isdigit() and name_produto != '':
-        for prod in produto:
-            if name_produto not in prod.name: 
-                scan_site_1(name_produto)
-                scan_site_2(name_produto)
-                scan_site_3(name_produto)
-                break
+    produto = Product.objects.filter(name__icontains=name_produto)
+    if not produto.exists():
+        print(False)
+        if not name_produto.isdigit() and name_produto != '':
+            print('pass digitoooo')
+            scan_site_1(name_produto)
+            scan_site_2(name_produto)
+            scan_site_3(name_produto)
+    else: 
+        print(True)
+        print('pass else')
+        
     dados = {
         'dados': Product.objects.filter(
             name__icontains=name_produto).order_by('price')
