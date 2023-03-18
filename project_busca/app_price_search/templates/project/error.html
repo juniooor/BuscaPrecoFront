@@ -1,0 +1,10 @@
+
+
+{% for dado in dados  %}
+            <tr>
+                <td><img style= "max-height: 150px; max-height=150px;" src="{{ dado.link_image }}" alt=""></td>
+                <td>{{ dado.name }}</td>
+                <td>R${{ dado.price | intcomma }}</td>
+                <td>{{ dado.site }}</td>
+                <td>{{ dado.quote_date}}</td>
+            </tr>

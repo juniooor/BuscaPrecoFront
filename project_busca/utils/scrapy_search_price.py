@@ -1,9 +1,10 @@
-from datetime import datetime, timezone
-from time import sleep
+from datetime import datetime
 
 import psycopg2
 from selenium import webdriver
-from selenium.common.exceptions import *
+from selenium.common.exceptions import (ElementNotSelectableException,
+                                        ElementNotVisibleException,
+                                        NoSuchElementException)
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
@@ -29,7 +30,7 @@ sql = conexao.cursor()
 def new_product(sql, conexao, name, price, site, link_image, quote_date):
     query = "SELECT * FROM app_price_search_product WHERE name=%s and price=%s and site=%s"
     values = (name, price, site)
-    # result = sql.execute(query, values)
+    result = sql.execute(query, values)
     dados = sql.fetchall()
     
     if len(dados) == 0:
@@ -48,7 +49,7 @@ def start_driver():
     chrome_options = Options()
      #--headless    
     arguments = ['--lang=en-US', '--window-size=1920,1080',
-                 '--incognito', '--headless' ] 
+                 '--incognito',] 
         
     for argument in arguments:
         chrome_options.add_argument(argument)     
@@ -63,14 +64,9 @@ def start_driver():
         ChromeDriverManager().install()), options=chrome_options)
     wait = WebDriverWait(
         driver,
-        20,
+        15,
         poll_frequency=1,
-        ignored_exceptions=[
-            NoSuchElementException,
-            ElementNotVisibleException,
-            ElementNotSelectableException,
-        ]
-    )
+        ignored_exceptions=[NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException])
     return driver, wait
 
 
@@ -90,6 +86,7 @@ def scan_site_1(item):
     image = link_image[0].get_attribute('src')
     
     new_product(sql, conexao, name, price, site, image, datetime.now())
+    print("ok1")
     
 def scan_site_2(item):
     #magazine luiza
@@ -107,12 +104,13 @@ def scan_site_2(item):
     image = link_image[0].get_attribute('src')
     
     new_product(sql, conexao, name, price, site, image, datetime.now())
+    print("ok2")
     
 def scan_site_3(item):
     #mercado livre
     produto = item.replace(' ', '-')
     driver, wait = start_driver()
-    driver.get('https://lista.mercadolivre.com.br/'+ produto)
+    driver.get('https://lista.mercadolivre.com.br/' + produto)
     names = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="ui-search-item__group ui-search-item__group--title shops__items-group"]/a[@class="ui-search-item__group__element shops__items-group-details ui-search-link"]/h2')))
     prices = wait.until(condicao_esperada.visibility_of_all_elements_located((By.XPATH, '//div[@class="ui-search-price__second-line shops__price-second-line"]/span[@class="price-tag ui-search-price__part shops__price-part"]/span[@class="price-tag-text-sr-only"]')))
     site = driver.current_url
@@ -122,5 +120,5 @@ def scan_site_3(item):
     image = link_image[0].get_attribute('src')
     
     new_product(sql, conexao, name, price, site, image, datetime.now())
-
+    print("ok3")
 
